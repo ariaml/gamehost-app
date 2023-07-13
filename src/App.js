@@ -1,41 +1,68 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { Stack, HStack, Heading, Spacer } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/icon'
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { GiTreasureMap } from 'react-icons/gi'
+import HomePage from './components/HomePage';
+import StorePage from './components/StorePage';
+import CommunityPage from './components/CommunityPage';
+import SupportPage from './components/SupportPage';
+import SignUpPage from './components/SignUpPage';
+import LogInPage from './components/LogInPage';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <Stack bg='#212121'>
+      <HStack mt='1' w='100%'>
+        {/* <Icon ml='50' as={GiTreasureMap} boxSize={7}/> */}
+        <Tabs ml='5'>
+          <TabList>
+            <Tab>HOME</Tab>
+            <Tab>STORE</Tab>
+            <Tab>COMMUNITY</Tab>
+            <Tab>SUPPORT</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <HomePage />
+            </TabPanel>
+            <TabPanel>
+              <StorePage/>
+            </TabPanel>
+            <TabPanel>
+              <CommunityPage/>
+            </TabPanel>
+            <TabPanel>
+              <SupportPage/>
+            </TabPanel>
+          </TabPanels>
+
+        </Tabs>
+        <Spacer></Spacer>
+        <Tabs align='end'>
+          <TabList>
+            <Tab>SIGN UP</Tab>
+            <Tab>LOG IN</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <SignUpPage/>
+            </TabPanel>
+            <TabPanel>
+              <LogInPage/>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </HStack>
+      
+      {/* <HomePage></HomePage>
+      <StorePage></StorePage>
+      <CommunityPage></CommunityPage>
+      <SupportPage></SupportPage>
+      <SignUpPage></SignUpPage>
+      <LogInPage></LogInPage> */}
+
+    </Stack>
   );
 }
 
