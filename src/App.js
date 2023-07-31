@@ -1,34 +1,32 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import { Tab, TabList, Tabs } from '@chakra-ui/react';
+import { HStack, Tab, TabList, Tabs, Box, Text, Spacer } from '@chakra-ui/react';
 import HomePage from './pages/HomePage';
 import StorePage from './pages/StorePage';
 import CommunityPage from './pages/CommunityPage';
 import SupportPage from './pages/SupportPage';
 import SignUpPage from './pages/SignUpPage';
-import LogInPage from './pages/LogInPage';
 
 function NavBar() {
   return (
-    <Tabs>
-      <TabList>
-        <Tab>
-          <Link to='/home'>HOME</Link>
-        </Tab>
-        <Tab>
-          <Link to='/store'>STORE</Link>
-        </Tab>
-        <Tab>
-          <Link to='/community'>COMMUNITY</Link>
-        </Tab>
-        <Tab>
-          <Link to='/support'>SUPPORT</Link>
-        </Tab>
-        <Tab align='end'>
-          <Link to='signup'>SIGN UP</Link>
-        </Tab>
-      </TabList>
-    </Tabs>
+    <HStack mt='2' mr='2' boxShadow='base' >
+      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
+        <Link to='/home'>HOME</Link>
+      </Box>
+      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
+        <Link to='/store'>STORE</Link>
+      </Box>
+      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
+        <Link to='/community'>COMMUNITY</Link>
+      </Box>
+      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
+        <Link to='/support'>SUPPORT</Link>
+      </Box>
+      <Spacer></Spacer>
+      <Box h='30px' mr='5' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
+      <Link to='/signup'>SIGN UP</Link>
+      </Box>
+    </HStack>
   );
 }
 
@@ -44,7 +42,6 @@ function App() {
           <Route path='/community' element={<CommunityPage />} />
           <Route path='/support' element={<SupportPage />} />
           <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/login' element={<LogInPage />} />
         </Routes>
       </div>
     </BrowserRouter>
