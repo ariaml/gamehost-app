@@ -11,22 +11,22 @@ import SignUpPage from './pages/SignUpPage';
 function NavBar() {
   return (
     <HStack boxShadow='base' bg='#2a2a2a' h='50px' alignItems='center' justifyContent="center">
-      <Center as={RouterLink} to='/home'  ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      <Center as={RouterLink} to='/home' h='100%' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
       <Text  textAlign='center'>HOME</Text>
       </Center>
-      <Box as={RouterLink} to='/store' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      <Center as={RouterLink} to='/store' h='100%' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
       STORE
-      </Box>
-      <Box as={RouterLink} to='/community' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      </Center>
+      <Center as={RouterLink} to='/community' h='100%' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
       COMMUNITY
-      </Box>
-      <Box as={RouterLink} to='/support' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      </Center>
+      <Center as={RouterLink} to='/support' h='100%' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
       SUPPORT
-      </Box>
+      </Center>
       <Spacer></Spacer>
-      <Box as={RouterLink} to='/signup' h='50px' mr='5' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      <Center as={RouterLink} to='/signup' h='100%' mr='5' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
       SIGN UP
-      </Box>
+      </Center>
     </HStack>
   );
 }

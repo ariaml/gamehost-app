@@ -7,13 +7,16 @@ function SupportPage() {
 
   const [concern, setConcern] = useState('');
   const { isOpen: showAlert, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleConcernChange = (event) => {
     setConcern(event.target.value);
   };
 
   const handleSubmit = () => {
+    setSubmitted(true);
     onOpen();
+    setConcern('');
   };
 
   const faqs = [
