@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import { HStack, Tab, TabList, Tabs, Box, Text, Spacer } from '@chakra-ui/react';
+import { Link as RouterLink } from "react-router-dom";
+import { HStack, Box, Spacer, Text, Center } from '@chakra-ui/react';
 import HomePage from './pages/HomePage';
 import StorePage from './pages/StorePage';
 import CommunityPage from './pages/CommunityPage';
@@ -9,22 +10,22 @@ import SignUpPage from './pages/SignUpPage';
 
 function NavBar() {
   return (
-    <HStack mt='2' mr='2' boxShadow='base' >
-      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
-        <Link to='/home'>HOME</Link>
+    <HStack boxShadow='base' bg='#2a2a2a' h='50px' alignItems='center' justifyContent="center">
+      <Center as={RouterLink} to='/home'  ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      <Text  textAlign='center'>HOME</Text>
+      </Center>
+      <Box as={RouterLink} to='/store' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      STORE
       </Box>
-      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
-        <Link to='/store'>STORE</Link>
+      <Box as={RouterLink} to='/community' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      COMMUNITY
       </Box>
-      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
-        <Link to='/community'>COMMUNITY</Link>
-      </Box>
-      <Box h='30px' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
-        <Link to='/support'>SUPPORT</Link>
+      <Box as={RouterLink} to='/support' h='50px' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      SUPPORT
       </Box>
       <Spacer></Spacer>
-      <Box h='30px' mr='5' ml='5' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '2px solid blue'}}> 
-      <Link to='/signup'>SIGN UP</Link>
+      <Box as={RouterLink} to='/signup' h='50px' mr='5' alignItems='center' ml='5' color='white' _focus={{ boxShadow: 'none' }} _hover={{ borderBottom: '5px solid #0287c3'}}>
+      SIGN UP
       </Box>
     </HStack>
   );

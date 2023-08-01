@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Image, Text, SimpleGrid, ChakraProvider } from '@chakra-ui/react';
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 const games = [
   {
     title: 'Game 1',
     image: 'game1.jpg', // Replace with the actual image URL
-    price: 19.99,
+    price: 1500,
   },
-  // Add more games here...
+  // Add more games
 ];
 
 function GameCard({ title, image, price }) {
@@ -18,7 +19,7 @@ function GameCard({ title, image, price }) {
         <Text fontSize="xl" fontWeight="semibold">
           {title}
         </Text>
-        <Text mt="2">${price}</Text>
+        <Text mt="2">Php{price}</Text>
       </Box>
     </Box>
   );

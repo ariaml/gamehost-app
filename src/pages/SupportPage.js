@@ -1,44 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Flex, Text, VStack, Input, Textarea, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, IconButton, StackDivider, HStack, Divider, FormControl, FormLabel } from '@chakra-ui/react';
-import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
+import { Box, Flex, Text, VStack, Textarea, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Divider, useDisclosure, CloseButton} from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
+import supportbg from './photos/supportbg.png'
 
 function SupportPage() {
-//   const [name, setName] = useState('');
-  const [concern, setConcern] = useState('');
-  const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState('');
 
-//   const handleNameChange = (event) => {
-//     setName(event.target.value);
-//   };
+  const [concern, setConcern] = useState('');
+  const { isOpen: showAlert, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
 
   const handleConcernChange = (event) => {
     setConcern(event.target.value);
   };
 
   const handleSubmit = () => {
-    alert('Form submitted successfully!');
-  };
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
-  const handleAddComment = () => {
-    setComments([...comments, { text: comment, likes: 0, dislikes: 0 }]);
-    setComment('');
-  };
-
-  const handleLike = (index) => {
-    const updatedComments = [...comments];
-    updatedComments[index].likes += 1;
-    setComments(updatedComments);
-  };
-
-  const handleDislike = (index) => {
-    const updatedComments = [...comments];
-    updatedComments[index].dislikes += 1;
-    setComments(updatedComments);
+    onOpen();
   };
 
   const faqs = [
@@ -54,87 +29,107 @@ function SupportPage() {
       question: 'Are there any gaming events or tournaments?',
       answer: 'Yes, there are numerous gaming events and tournaments that take place both online and offline. Keep an eye on gaming communities and official game websites for announcements about upcoming events.',
     },
+    {
+      question: 'Question 4?',
+      answer: 'Yes, there are numerous gaming events and tournaments that take place both online and offline. Keep an eye on gaming communities and official game websites for announcements about upcoming events.',
+    },
+    {
+      question: 'Question 5?',
+      answer: 'Yes, there are numerous gaming events and tournaments that take place both online and offline. Keep an eye on gaming communities and official game websites for announcements about upcoming events.',
+    },
   ];
 
   return (
-    <Box p={8}>
-      <VStack spacing={8} width="600px" mx="auto">
-        <Text fontSize="2xl" fontWeight="bold">
-          Support Page
+    <Box bg='#121212' minHeight='100vh'>
+      <Box bg={`url(${supportbg})`} h="150px" width="100%">
+        <Flex align="center" justify="center" h="100%">
+          <Text fontSize="2xl" fontWeight="bold" color="white">
+            Welcome to Support Page
+          </Text>
+        </Flex>
+      </Box>
+
+      <VStack p='8' spacing={8} width="700px" mx="auto">
+        <Text fontSize="xl" fontWeight="semi-bold" color="white">
+          Frequently Asked Questions
         </Text>
-        <Textarea
-          placeholder="Your Concern"
-          value={concern}
-          onChange={handleConcernChange}
-          size="md"
-          height="150px"
-        />
-        <Button colorScheme="blue" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Divider />
+
         <Accordion width="100%" allowMultiple>
           {faqs.map((faq, index) => (
             <AccordionItem key={index}>
               <h2>
                 <AccordionButton>
-                  <Box flex="1" textAlign="left" fontWeight="bold">
-                    {faq.question}
+                  <Box flex="1" textAlign="left" >
+                    <Text color="white">{faq.question}</Text>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel pb={4}>
-                {faq.answer}
+              <AccordionPanel pb={3}>
+                <Text color="white">{faq.answer}</Text>
                 <VStack
                   align="flex-start"
                   spacing={2}
-                  divider={<StackDivider borderColor="gray.200" />}
                   mt={4}
                 >
-                  {comments.map((comment, commentIndex) => (
-                    <Box key={commentIndex} w="100%">
-                      <Text fontWeight="bold">{comment.text}</Text>
-                      <HStack>
-                        <IconButton
-                          aria-label="Like"
-                          icon={<AiOutlineLike />}
-                          size="sm"
-                          onClick={() => handleLike(commentIndex)}
-                        />
-                        <Text>{comment.likes}</Text>
-                        <IconButton
-                          aria-label="Dislike"
-                          icon={<AiOutlineDislike />}
-                          size="sm"
-                          onClick={() => handleDislike(commentIndex)}
-                        />
-                        <Text>{comment.dislikes}</Text>
-                      </HStack>
-                    </Box>
-                  ))}
-                  <FormControl>
-                    <FormLabel>Add a comment:</FormLabel>
-                    <Input
-                      type="text"
-                      value={comment}
-                      onChange={handleCommentChange}
-                      size="sm"
-                      placeholder="Enter your comment"
-                    />
-                    <Button
-                      colorScheme="blue"
-                      size="sm"
-                      onClick={handleAddComment}
-                    >
-                      Add Comment
-                    </Button>
-                  </FormControl>
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
           ))}
         </Accordion>
+        </VStack>
+
+        <Divider></Divider>
+        <VStack mt='30'>
+        <Text fontSize="xl" fontWeight="bold" color='white'>
+          Can't find what you're looking for? 
+        </Text>
+        <Text mt='-2' color='white'>
+          Submit your concerns here and we'll be happy to assist you.
+        </Text>
+        <Textarea 
+          mt='30'
+          color='white'
+          placeholder="Your Concern"
+          value={concern}
+          onChange={handleConcernChange}
+          size="md"
+          height="100px"
+          w='800px'
+        />
+
+        {showAlert && (
+          <Alert
+            status='success'
+            variant='subtle'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+            textAlign='center'
+            height='200px'
+            width='500px'
+            borderRadius='lg'
+          >
+            <AlertIcon boxSize='30px' mr={0} />
+            <AlertTitle mt={4} mb={1} fontSize='lg'>
+              Concern submitted!
+            </AlertTitle>
+            <AlertDescription maxWidth='sm'>
+              Thanks for submitting your concern. Our team will get back to you soon.
+            </AlertDescription>
+            <CloseButton
+              alignSelf='flex-start'
+              position='relative'
+              right={1}
+              top={1}
+              onClick={onClose}
+            />
+          </Alert>
+        )}
+
+        <Button mt='5' colorScheme="blue" onClick={handleSubmit}>
+          Submit
+        </Button>
       </VStack>
     </Box>
   );
