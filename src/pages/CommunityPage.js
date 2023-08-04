@@ -10,18 +10,21 @@ import commimage from './photos/comm.jpg';
 import porkimage from './photos/pork.jpg';
 
 function CommunityPage() {
+  
   const [posts, setPosts] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
+  const [comments, setComments] = useState({});
+  const [showCommentInput, setShowCommentInput] = useState({});
 
   const handleAddPost = () => {
     const newPost = {
       id: Date.now(),
       title: newPostTitle,
       content: newPostContent,
-      likes: 0,
-      dislikes: 0,
+      likes: false,
+      dislikes: false,
     };
     setPosts([...posts, newPost]);
     setNewPostTitle('');
@@ -31,14 +34,41 @@ function CommunityPage() {
 
   const handleLike = (postId) => {
     setPosts((prevPosts) =>
-      prevPosts.map((post) => (post.id === postId ? { ...post, likes: post.likes + 1 } : post))
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, liked: !post.liked, disliked: false } : post
+      )
     );
   };
 
   const handleDislike = (postId) => {
     setPosts((prevPosts) =>
-      prevPosts.map((post) => (post.id === postId ? { ...post, dislikes: post.dislikes + 1 } : post))
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, disliked: !post.disliked, liked: false } : post
+      )
     );
+  };
+
+  const handleAddComment = (postId, comment) => {
+    // If the post's comment array doesn't exist, initialize it as an empty array
+    if (!comments[postId]) {
+      setComments((prevComments) => ({
+        ...prevComments,
+        [postId]: [],
+      }));
+    }
+  
+    // Add the comment to the post's comment array
+    setComments((prevComments) => ({
+      ...prevComments,
+      [postId]: [...prevComments[postId], comment],
+    }));
+  };
+  
+  const toggleCommentInput = (postId) => {
+    setShowCommentInput((prev) => ({
+      ...prev,
+      [postId]: !prev[postId],
+    }));
   };
 
   return (
@@ -126,26 +156,60 @@ function CommunityPage() {
                   icon={<AiOutlineLike />}
                   aria-label='Like'
                   onClick={() => handleLike(post.id)}
-                  color={post.likes > 0 ? 'blue.500' : 'white'}
+                  color={post.liked ? 'blue.500' : 'white'}
                 />
-                <Badge>{post.likes}</Badge>
                 <IconButton
                   bg='#1A1A1B'
                   icon={<AiOutlineDislike />}
                   aria-label='Dislike'
                   onClick={() => handleDislike(post.id)}
-                  color={post.dislikes > 0 ? 'red.500' : 'white'}
+                  color={post.disliked ? 'red.500' : 'white'}
                 />
-                <Badge>{post.dislikes}</Badge>
                 <IconButton
+                  onClick={() => toggleCommentInput(post.id)}
                   bg='#1A1A1B'
                   icon={<BiChat />}
                   aria-label='Comment'
                   color='white'
                 />
               </HStack>
+
+              {/* Comment Input Field */}
+              {showCommentInput[post.id] && (
+                  <>
+                    <Input
+                      color='white'
+                      bg='#272729'
+                      placeholder='Write a comment...'
+                      value={comments[post.id] ? comments[post.id] : ''}
+                      onChange={(e) =>
+                        setComments((prevComments) => ({ ...prevComments, [post.id]: e.target.value }))
+                      }
+                    />
+                    {/* Add Comment Button */}
+                    <Button
+                      colorScheme='blue'
+                      onClick={() => {
+                        if (comments[post.id]) {
+                          handleAddComment(post.id, comments[post.id]);
+                          // Clear the comment input field after adding the comment
+                          setComments((prevComments) => ({ ...prevComments, [post.id]: '' }));
+                        }
+                      }}
+                    >
+                      Add Comment
+                    </Button>
+                  </>
+                )}
+                {/* Render Comments */}
+                {comments[post.id] &&
+                  comments[post.id].map((comment, index) => (
+                    <Box key={index} mt={2} p={2} bg='gray.700' borderRadius='md'>
+                      <Text color='white'>{comment}</Text>
+                    </Box>
+                  ))}
             </Box>
-          ))}
+            ))}
 
             {/* Sample card/post */}
             <Card maxW='550px' bg='#1A1A1B'>
