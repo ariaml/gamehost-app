@@ -1,7 +1,7 @@
 //react use
 import React, {useState} from 'react';
 import {Box, Flex, Link, Text, VStack, Button} from '@chakra-ui/react';
-// Input
+//Input
 import {Input, InputGroup, InputRightElement} from '@chakra-ui/react';
 
 function SignUpPage() {
