@@ -15,8 +15,6 @@ function CommunityPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
-  const [comments, setComments] = useState({});
-  const [showCommentInput, setShowCommentInput] = useState({});
 
   const handleAddPost = () => {
     const newPost = {
@@ -46,29 +44,6 @@ function CommunityPage() {
         post.id === postId ? { ...post, disliked: !post.disliked, liked: false } : post
       )
     );
-  };
-
-  const handleAddComment = (postId, comment) => {
-    // If the post's comment array doesn't exist, initialize it as an empty array
-    if (!comments[postId]) {
-      setComments((prevComments) => ({
-        ...prevComments,
-        [postId]: [],
-      }));
-    }
-  
-    // Add the comment to the post's comment array
-    setComments((prevComments) => ({
-      ...prevComments,
-      [postId]: [...prevComments[postId], comment],
-    }));
-  };
-  
-  const toggleCommentInput = (postId) => {
-    setShowCommentInput((prev) => ({
-      ...prev,
-      [postId]: !prev[postId],
-    }));
   };
 
   return (
@@ -166,48 +141,12 @@ function CommunityPage() {
                   color={post.disliked ? 'red.500' : 'white'}
                 />
                 <IconButton
-                  onClick={() => toggleCommentInput(post.id)}
                   bg='#1A1A1B'
                   icon={<BiChat />}
                   aria-label='Comment'
                   color='white'
                 />
               </HStack>
-
-              {/* Comment Input Field */}
-              {showCommentInput[post.id] && (
-                  <>
-                    <Input
-                      color='white'
-                      bg='#272729'
-                      placeholder='Write a comment...'
-                      value={comments[post.id] ? comments[post.id] : ''}
-                      onChange={(e) =>
-                        setComments((prevComments) => ({ ...prevComments, [post.id]: e.target.value }))
-                      }
-                    />
-                    {/* Add Comment Button */}
-                    <Button
-                      colorScheme='blue'
-                      onClick={() => {
-                        if (comments[post.id]) {
-                          handleAddComment(post.id, comments[post.id]);
-                          // Clear the comment input field after adding the comment
-                          setComments((prevComments) => ({ ...prevComments, [post.id]: '' }));
-                        }
-                      }}
-                    >
-                      Add Comment
-                    </Button>
-                  </>
-                )}
-                {/* Render Comments */}
-                {comments[post.id] &&
-                  comments[post.id].map((comment, index) => (
-                    <Box key={index} mt={2} p={2} bg='gray.700' borderRadius='md'>
-                      <Text color='white'>{comment}</Text>
-                    </Box>
-                  ))}
             </Box>
             ))}
 
@@ -319,12 +258,15 @@ function CommunityPage() {
             <Text fontWeight='semibold' fontSize='xl' color='white'>
               Topics for you
             </Text>
-            <Divider />
-            <Link color='white'>Black Screen</Link><br />
-            <Link color='white'>Gameplay</Link><br />
-            <Link color='white'>Spooderman</Link><br />
-            <Link color='white'>Spiderverse</Link>
+            <Divider my="2" borderColor="gray.600" />
+            <Flex direction="column" spacing="1">
+              <Link color='white'>Black Screen</Link>
+              <Link color='white'>Gameplay</Link>
+              <Link color='white'>Spooderman</Link>
+              <Link color='white'>Spiderverse</Link>
+            </Flex>
           </Box>
+
 
         </Flex>
       </Center>

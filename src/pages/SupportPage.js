@@ -1,13 +1,11 @@
 //react use
 import React, {useState} from 'react';
-import {useDisclosure } from '@chakra-ui/react';
+import {useToast} from '@chakra-ui/react';
 import {Box, Flex, Text, VStack, Textarea, Button, Divider} from '@chakra-ui/react';
 //input
 import {InputGroup, InputRightElement, Input} from '@chakra-ui/react';
 //accordion
 import {Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon} from '@chakra-ui/react';
-//alert
-import {AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay} from '@chakra-ui/react'
 //icon
 import {Icon} from '@chakra-ui/icon'
 import {FaSearch} from 'react-icons/fa';
@@ -18,7 +16,7 @@ function SupportPage() {
 
   // set section
   const [concern, setConcern] = useState('');
-  const { isOpen: showAlert, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const toast = useToast();
 
   // handle section
   const handleConcernChange = (event) => {
@@ -26,8 +24,16 @@ function SupportPage() {
   };
 
   const handleSubmit = () => {
-    onOpen();
     setConcern('');
+
+    // Show toast notification on submission
+    toast({
+      title: 'Concern submitted!',
+      description: 'Thanks for submitting your concern. Our team will get back to you soon.',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   //faqs
@@ -136,27 +142,6 @@ function SupportPage() {
           size='md'
           height='100px'
         />
-
-        {/* alert section */}
-        <AlertDialog isOpen={showAlert} leastDestructiveRef={undefined} onClose={onClose}>
-          <AlertDialogOverlay>
-            <AlertDialogContent bg='gray'>
-              <AlertDialogHeader fontSize='lg' fontWeight='bold' color='white'>
-                Concern submitted!
-              </AlertDialogHeader>
-
-              <AlertDialogBody color='white'>
-                Thanks for submitting your concern. Our team will get back to you soon.
-              </AlertDialogBody>
-
-              <AlertDialogFooter>
-                <Button ref={undefined} onClick={onClose}>
-                  Close
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
 
         <Button mt={5} colorScheme='blue' onClick={handleSubmit}>
           Submit

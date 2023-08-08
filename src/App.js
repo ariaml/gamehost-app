@@ -115,22 +115,22 @@ function NavBar() {
         <DrawerOverlay />
         <DrawerContent bg='#2a2a2a'>
           <DrawerCloseButton />
-          <DrawerHeader></DrawerHeader>
+          <DrawerHeader />
           <DrawerBody>
             <VStack spacing='4' color='white'>
-              <Link as={RouterLink} to='/home'>
+              <Link to='/home' as={RouterLink} color={useLocation().pathname === '/home' ? 'blue' : 'white'}>
                 HOME
               </Link>
-              <Link as={RouterLink} to='/store'>
+              <Link to='/store' as={RouterLink} color={useLocation().pathname === '/store' ? 'blue' : 'white'}>
                 STORE
               </Link>
-              <Link as={RouterLink} to='/community'>
+              <Link to='/community' as={RouterLink} color={useLocation().pathname === '/community' ? 'blue' : 'white'}>
                 COMMUNITY
               </Link>
-              <Link as={RouterLink} to='/support'>
+              <Link to='/support' as={RouterLink} color={useLocation().pathname === '/support' ? 'blue' : 'white'}>
                 SUPPORT
               </Link>
-              <Link as={RouterLink} to='/signup'>
+              <Link to='/signup' as={RouterLink} color={useLocation().pathname === '/signup' ? 'blue' : 'white'}>
                 SIGN UP
               </Link>
             </VStack>
