@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import { Center, Text, Input, Button, VStack, Box, HStack, IconButton, Badge, Flex, Avatar, Heading, Divider, Link, Textarea } from '@chakra-ui/react';
+//react
+import { Stack, VStack, HStack, Center, Input, Box, Flex, Heading, Divider, Link } from '@chakra-ui/react';
+//text
+import { Text, Textarea } from '@chakra-ui/react'
+//button
+import { Button, IconButton } from '@chakra-ui/react'
+//modal
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, useDisclosure } from '@chakra-ui/react';
+//card
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
+//avatar
+import { Avatar, AvatarGroup } from '@chakra-ui/react'
+//icons
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import { BiChat } from 'react-icons/bi';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { EditIcon } from '@chakra-ui/icons';
+//images
 import commimage from './photos/comm.jpg';
 import porkimage from './photos/pork.jpg';
 
+
 function CommunityPage() {
-  
-  const [posts, setPosts] = useState([]);
+
+  //set section
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [posts, setPosts] = useState([]);
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
 
+  //handle section
   const handleAddPost = () => {
     const newPost = {
       id: Date.now(),
@@ -33,7 +47,12 @@ function CommunityPage() {
   const handleLike = (postId) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, liked: !post.liked, disliked: false } : post
+        post.id === postId ? { 
+          ...post, 
+          likes: post.liked ? post.likes - 1 : post.likes + 1,
+          disliked: false,
+          liked: !post.liked,
+        } : post
       )
     );
   };
@@ -41,7 +60,12 @@ function CommunityPage() {
   const handleDislike = (postId) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, disliked: !post.disliked, liked: false } : post
+        post.id === postId ? { 
+          ...post, 
+          dislikes: post.disliked ? post.dislikes - 1 : post.dislikes + 1,
+          liked: false,
+          disliked: !post.disliked,
+        } : post
       )
     );
   };
@@ -50,8 +74,7 @@ function CommunityPage() {
     <Box bg='#121212' minHeight='100vh'>
       <Center>
         <Flex direction={{ base: 'column', md: 'row' }}>
-        
-
+          {/* post vstack section */}
           <VStack spacing='4' p='4' align='stretch' flex='1'>
             {/* "Create Post" Box */}
             <Box
@@ -118,36 +141,38 @@ function CommunityPage() {
               </ModalContent>
             </Modal>
 
-            {/* Display posts */}
+            {/* Display post */}
             {posts.map((post) => (
-            <Box key={post.id} p={4}  borderRadius='md' w='100%' bg='#1A1A1B'>
-              <Text fontSize='xl' fontWeight='semibold'>
-                <Text color='white'>{post.title}</Text>
-              </Text>
-              <Text color='white'>{post.content}</Text>
-              <HStack spacing={4}>
-                <IconButton
-                  bg='#1A1A1B'
-                  icon={<AiOutlineLike />}
-                  aria-label='Like'
-                  onClick={() => handleLike(post.id)}
-                  color={post.liked ? 'blue.500' : 'white'}
-                />
-                <IconButton
-                  bg='#1A1A1B'
-                  icon={<AiOutlineDislike />}
-                  aria-label='Dislike'
-                  onClick={() => handleDislike(post.id)}
-                  color={post.disliked ? 'red.500' : 'white'}
-                />
-                <IconButton
-                  bg='#1A1A1B'
-                  icon={<BiChat />}
-                  aria-label='Comment'
-                  color='white'
-                />
-              </HStack>
-            </Box>
+              <Box key={post.id} p={4}  borderRadius='md' w='100%' bg='#1A1A1B'>
+                <Text fontSize='xl' fontWeight='semibold'>
+                  <Text color='white'>{post.title}</Text>
+                </Text>
+                <Text color='white'>{post.content}</Text>
+                <HStack spacing={4}>
+                  <IconButton
+                    bg='#1A1A1B'
+                    icon={<AiOutlineLike />}
+                    aria-label='Like'
+                    onClick={() => handleLike(post.id)}
+                    color={post.liked ? 'blue.500' : 'white'}
+                  />
+                  <Text color='white'>{post.likes}</Text>
+                  <IconButton
+                    bg='#1A1A1B'
+                    icon={<AiOutlineDislike />}
+                    aria-label='Dislike'
+                    onClick={() => handleDislike(post.id)}
+                    color={post.disliked ? 'red.500' : 'white'}
+                  />
+                  <Text color='white'>{post.dislikes}</Text>
+                  <IconButton
+                    bg='#1A1A1B'
+                    icon={<BiChat />}
+                    aria-label='Comment'
+                    color='white'
+                  />
+                </HStack>
+              </Box>
             ))}
 
             {/* Sample card/post */}
@@ -179,7 +204,6 @@ function CommunityPage() {
                     minW: '136px',
                   },
                 }}
-                
               >
                 <IconButton
                   bg='#1A1A1B'
@@ -251,25 +275,33 @@ function CommunityPage() {
                 />
               </CardFooter>
             </Card>
-
           </VStack>
         
-          <Box h='350px' w='250px' bg='#1A1A1B' p='4' mt='4' rounded='md' ml={{ md: '2' }}>
-            <Text fontWeight='semibold' fontSize='xl' color='white'>
-              Topics for you
-            </Text>
-            <Divider my="2" borderColor="gray.600" />
-            <Flex direction="column" spacing="1">
-              <Link color='white'>Black Screen</Link>
-              <Link color='white'>Gameplay</Link>
-              <Link color='white'>Spooderman</Link>
-              <Link color='white'>Spiderverse</Link>
-            </Flex>
-          </Box>
-
-
+          {/* topics and avatar stack section */}
+          <Stack  mt='4' rounded='md' ml={{ md: '2' }}>
+            <Box h='350px' w='250px' bg='#1A1A1B' p='4'>
+              <Text fontWeight='semibold' fontSize='xl' color='white'>
+                Topics for you
+              </Text>
+              <Divider my="2" borderColor="gray.600" />
+              <Flex direction="column" spacing="1">
+                <Link color='white'>Black Screen</Link>
+                <Link color='white'>Gameplay</Link>
+                <Link color='white'>Spooderman</Link>
+                <Link color='white'>Spiderverse</Link>
+              </Flex>
+            </Box>
+            <AvatarGroup size='sm' max={2} mt='5'>
+              <Avatar name='Spider-Ham' src={porkimage} />
+              <Avatar name='Spooderman' src={commimage} />
+              <Avatar name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />
+              <Avatar name='Prosper Otemuyiwa' src='https://bit.ly/prosper-baba' />
+              <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
+            </AvatarGroup>
+          </Stack>
         </Flex>
       </Center>
+      
     </Box>
   );
 }

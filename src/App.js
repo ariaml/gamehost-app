@@ -1,11 +1,11 @@
 import React from 'react';
 //react use
-import {HStack, Spacer, Text, Center, IconButton, VStack} from '@chakra-ui/react';
+import {HStack, Spacer, Text, Center, IconButton, VStack, Divider} from '@chakra-ui/react';
 import {useDisclosure} from '@chakra-ui/react';
 //drawer
 import {Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody} from '@chakra-ui/react';
 //router dom
-import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {Link as RouterLink} from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 //icon
@@ -18,8 +18,15 @@ import SupportPage from './pages/SupportPage';
 import SignUpPage from './pages/SignUpPage';
 
 function NavBar() {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+
+  const closeDrawer = () => {
+    if (isOpen) {
+      onClose();
+    }
+  };
 
   return (
     <>
@@ -118,21 +125,26 @@ function NavBar() {
           <DrawerHeader />
           <DrawerBody>
             <VStack spacing='4' color='white'>
-              <Link to='/home' as={RouterLink} color={useLocation().pathname === '/home' ? 'blue' : 'white'}>
+              <Text to='/home' as={RouterLink} onClick={closeDrawer} _hover={{ textDecoration: 'underline' }}>
                 HOME
-              </Link>
-              <Link to='/store' as={RouterLink} color={useLocation().pathname === '/store' ? 'blue' : 'white'}>
+              </Text>
+              <Divider />
+              <Text to='/store' as={RouterLink} onClick={closeDrawer} _hover={{ textDecoration: 'underline' }}>
                 STORE
-              </Link>
-              <Link to='/community' as={RouterLink} color={useLocation().pathname === '/community' ? 'blue' : 'white'}>
+              </Text>
+              <Divider />
+              <Text to='/community' as={RouterLink} onClick={closeDrawer} _hover={{ textDecoration: 'underline' }} >
                 COMMUNITY
-              </Link>
-              <Link to='/support' as={RouterLink} color={useLocation().pathname === '/support' ? 'blue' : 'white'}>
+              </Text>
+              <Divider />
+              <Text to='/support' as={RouterLink} onClick={closeDrawer} _hover={{ textDecoration: 'underline' }}>
                 SUPPORT
-              </Link>
-              <Link to='/signup' as={RouterLink} color={useLocation().pathname === '/signup' ? 'blue' : 'white'}>
+              </Text>
+              <Divider />
+              <Text to='/signup' as={RouterLink} onClick={closeDrawer} _hover={{ textDecoration: 'underline' }} >
                 SIGN UP
-              </Link>
+              </Text>
+              <Divider />
             </VStack>
           </DrawerBody>
         </DrawerContent>

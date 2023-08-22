@@ -1,7 +1,8 @@
 //react use
 import React, {useState} from 'react';
 import {useToast} from '@chakra-ui/react';
-import {Box, Flex, Text, VStack, Textarea, Button, Divider} from '@chakra-ui/react';
+//react
+import {Box, Text, VStack, Textarea, Button, Divider} from '@chakra-ui/react';
 //input
 import {InputGroup, InputRightElement, Input} from '@chakra-ui/react';
 //accordion
@@ -9,24 +10,22 @@ import {Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon
 //icon
 import {Icon} from '@chakra-ui/icon'
 import {FaSearch} from 'react-icons/fa';
-//photos
+//images
 import supportbg from './photos/supportbg.png'
 
 function SupportPage() {
 
-  // set section
+  //set section
   const [concern, setConcern] = useState('');
   const toast = useToast();
 
-  // handle section
+  //handle section
   const handleConcernChange = (event) => {
     setConcern(event.target.value);
   };
 
   const handleSubmit = () => {
     setConcern('');
-
-    // Show toast notification on submission
     toast({
       title: 'Concern submitted!',
       description: 'Thanks for submitting your concern. Our team will get back to you soon.',
@@ -36,7 +35,7 @@ function SupportPage() {
     });
   };
 
-  //faqs
+  //faqs data
   const faqs = [
     {
       question: 'What are the system requirements for gaming?',
@@ -62,45 +61,43 @@ function SupportPage() {
 
   return (
     <Box bg='#121212' minHeight='100vh'>
+      {/* title bg and text */}
       <Box 
         bg={`url(${supportbg})`} 
         h={{base:'150px', md:'200px'}} 
         width='100%'
-        >
-        <Flex align='center' justify='center' h='100%'>
-          <VStack>
+      >
+        <VStack align='center' justify='center' h='100%'>
             <Text fontSize={{base:'xl', md:'2xl'}} fontWeight='bold' color='white'>
               Welcome to Support Page
             </Text>
 
-            {/* search input */}
             <InputGroup width={{base:'90%', md:'650px'}} mt='5'>
               <Input
                 variant='outline'
                 placeholder='Search' _placeholder={{opacity:1, color: 'gray.500'}}
-                bg='white'
                 boxShadow='dark-lg'
               />
               <InputRightElement>
                 <Icon as={FaSearch} color='gray.500' />
               </InputRightElement>
             </InputGroup>
-          </VStack>
-        </Flex>
+        </VStack>
       </Box>
 
+      {/* faqs */}
       <VStack 
         p={{base:4, md:8}} 
         spacing={8} 
         width={{base:'90%', md:'700px'}} 
         mx='auto'
-        >
+      >
         <Text fontSize={{base:'xl', md:'2xl'}} fontWeight='semi-bold' color='white'>
           Frequently Asked Questions
         </Text>
 
         {/* display faqs */}
-        <Accordion width='100%' allowMultiple>
+        <Accordion width='100%' allowMultiple mb='20'>
           {faqs.map((faq, index) => (
             <AccordionItem key={index}>
                 <AccordionButton>
@@ -118,35 +115,32 @@ function SupportPage() {
       </VStack>
 
       <Divider />
+
       {/* input concern */}
       <VStack 
         mt={{base:8, md:30}} 
         width={{base:'90%', md:'800px'}} 
         mx='auto'
-        >
-        <Text 
-          fontSize={{base:'xl', md:'2xl'}} 
-          fontWeight='bold' color='white'
-          >
+      >
+        <Text fontSize={{base:'xl', md:'2xl'}} fontWeight='bold' color='white'>
           Can't find what you're looking for?
         </Text>
-        <Text mt={{base:-2, md:0 }} color='white'>
+        <Text mt={{base:-2, md:0 }}>
           Submit your concerns here and we'll be happy to assist you.
         </Text>
         <Textarea
           mt={5}
-          color='white'
           placeholder='Your Concern'
           value={concern}
           onChange={handleConcernChange}
           size='md'
           height='100px'
         />
-
         <Button mt={5} colorScheme='blue' onClick={handleSubmit}>
           Submit
         </Button>
       </VStack>
+
     </Box>
   );
 }
