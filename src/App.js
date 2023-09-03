@@ -1,6 +1,6 @@
 import React from 'react';
 //react use
-import {HStack, Spacer, Text, Center, IconButton, VStack, Divider} from '@chakra-ui/react';
+import {HStack, Spacer, Text, Center, IconButton, VStack, Divider, } from '@chakra-ui/react';
 import {useDisclosure} from '@chakra-ui/react';
 //drawer
 import {Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody} from '@chakra-ui/react';
@@ -10,17 +10,20 @@ import {Link as RouterLink} from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 //icon
 import {HamburgerIcon} from '@chakra-ui/icons';
+import { AiOutlineShoppingCart } from "react-icons/ai";
 //pages
 import HomePage from './pages/HomePage';
 import StorePage from './pages/StorePage';
 import CommunityPage from './pages/CommunityPage';
 import SupportPage from './pages/SupportPage';
 import SignUpPage from './pages/SignUpPage';
+import CartPage from './pages/CartPage';
 
 function NavBar() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+  const [isCartDrawerOpen, setCartDrawerOpen] = React.useState(false);
 
   const closeDrawer = () => {
     if (isOpen) {
@@ -101,13 +104,21 @@ function NavBar() {
           SUPPORT
         </Center>
         <Spacer></Spacer>
+
+        <IconButton
+          as={RouterLink}
+          to='/cart'
+          icon={<AiOutlineShoppingCart />}
+          colorScheme="white" // Adjust the color to match your navbar's text color
+        />
+
         <Center
           as={RouterLink}
           to='/signup'
           h='100%'
           mr='5'
           alignItems='center'
-          ml='5'
+          ml='1'
           color='white'
           borderBottom={location.pathname === '/signup' ? '5px solid #0287c3' : 'none'}
           _focus={{ boxShadow: 'none' }}
@@ -115,6 +126,24 @@ function NavBar() {
         >
           SIGN UP
         </Center>
+
+      {/* Shopping Cart Drawer
+      <Drawer
+        isOpen={isCartDrawerOpen}
+        placement="right"
+        blockScrollOnMount={false}
+        onClose={() => setCartDrawerOpen(false)}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+        <DrawerCloseButton />
+          <DrawerHeader>Shopping Cart</DrawerHeader>
+          <DrawerBody>
+            
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer> */}
+
       </HStack>
 
       {/* Mobile Drawer */}
@@ -165,6 +194,7 @@ function App() {
           <Route path='/community' element={<CommunityPage />} />
           <Route path='/support' element={<SupportPage />} />
           <Route path='/signup' element={<SignUpPage />} />
+          <Route path='/cart' element={<CartPage />} />
         </Routes>
       </div>
     </BrowserRouter>

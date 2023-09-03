@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Box, Image, Text, SimpleGrid, Link, Stack, Heading, VStack, Divider } from '@chakra-ui/react';
 //button
 import { Button, ButtonGroup} from '@chakra-ui/react'
@@ -9,109 +10,29 @@ import {InputGroup, InputRightElement, Input} from '@chakra-ui/react';
 //icon
 import { Icon } from '@chakra-ui/icon'
 import { FaSearch } from 'react-icons/fa';
+import { BsFillPlusCircleFill } from "react-icons/bs";
 //images
-import remnant2 from './photos/remnant2.jfif'
-import gtav from './photos/gtav.jpg'
-import deadisland2 from './photos/deadisland2.jpg'
-import dbd from './photos/dbd.jfif'
-import expanse from './photos/expanse.jfif'
-import cyberpunk from './photos/cyberpunk.png'
-import thehunter from './photos/thehunter.jpg'
-import borderlands3 from './photos/borderlands3.jpg'
-import spidermanremastered from './photos/spidermanremastered.jfif'
-import acv from './photos/acv.jpg'
-import jwe2 from './photos/jwe2.jpg'
-import elderscrolls from './photos/elderscrolls.jpg'
-import hogwarts from './photos/hogwarts.jpg'
 import bg2 from './photos/bg2.png'
+//rtk
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../features/CartSlice";
 
 function StorePage() {
   
-  //all games data
-  const cardData = [
-    {
-      id: 1,
-      imageSrc: remnant2,
-      title: 'Remnant 2',
-      price: 'Php 1,955',
-    },
-    {
-      id: 2,
-      imageSrc: gtav,
-      title: 'GTA V',
-      price: 'Php 996',
-    },
-    {
-      id: 3,
-      imageSrc: deadisland2,
-      title: 'Dead Island 2',
-      price: 'Php 2,199',
-    },
-    {
-      id: 4,
-      imageSrc: dbd,
-      title: 'Dead by Daylight',
-      price: 'Php 499.99',
-    },
-    {
-      id: 5,
-      imageSrc: expanse,
-      title: 'The Expanse - A Telltale Series',
-      price: 'Php 999.99',
-    },
-    {
-      id: 6,
-      imageSrc: cyberpunk,
-      title: 'Cyberpunk 2077',
-      price: 'Php 2,431.99',
-    },
-    {
-      id: 7,
-      imageSrc: thehunter,
-      title: 'theHunter: Call of the Wild',
-      price: 'Php 449.95',
-    },
-    {
-      id: 8,
-      imageSrc: borderlands3,
-      title: 'Borderlands 3',
-      price: 'Php 2,399',
-    },
-    {
-      id: 9,
-      imageSrc: spidermanremastered,
-      title: 'Spider-Man Remastered',
-      price: 'Php 2,990',
-    },
-  ];
+  const items = useSelector((state) => state.allCart.items);
+  const dispatch = useDispatch();
 
-  //top games data
-  const topGamesCardData = [
-    {
-      id: 10,
-      imageSrc: acv,
-      title: 'Assassins Creed Valhalla',
-      price: 'Php 2,200',
-    },
-    {
-      id: 11,
-      imageSrc: jwe2,
-      title: 'Jurassic World Evolution 2',
-      price: 'Php 2,069.95',
-    },
-    {
-      id: 12,
-      imageSrc: elderscrolls,
-      title: 'Elder Scrolls Online',
-      price: 'Php 920',
-    },
-    {
-      id: 13,
-      imageSrc: hogwarts,
-      title: 'Hogwarts Legacy',
-      price: 'Php 2,500',
-    },
-  ];
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  console.log(items);
 
   return (
     <VStack bg='#121212' minHeight='100vh'>
@@ -145,7 +66,7 @@ function StorePage() {
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={4} overflowX='auto' maxW='100%' p='10'>
-        {topGamesCardData.map((card) => (
+        {items.slice(9, 13).map((card, index) => ( 
           <Card key={card.id} maxW="sm" bg='#272729' >
             <CardBody>
               <Image
@@ -160,7 +81,7 @@ function StorePage() {
             <Divider />
             <CardFooter>
               <ButtonGroup spacing="2">
-                <Button variant="solid" colorScheme="blue">
+                <Button variant="solid" colorScheme="blue" onClick={() => addToCart(card)}>
                   Buy now
                 </Button>
                 <Button variant="ghost" colorScheme="blue">
@@ -178,27 +99,47 @@ function StorePage() {
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} spacing={10} p='10' mt='5' mb='10'>
-        {cardData.map((card) => (
-          <VStack key={card.id} align='stretch'>
+        {items.slice(0, 9).map((item, index) => (
+          <VStack key={item.id} align='stretch'>
             <Card
               bg='#121212'
               direction={{ base: 'column', sm: 'row' }}
               overflow='hidden'
               h='100px' w='350px'
               maxW='350px'
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+          
             >
               <Image
                 objectFit='cover'
                 maxW={{ base: '100%', sm: '150px' }}
-                src={card.imageSrc}
-                alt={card.title}
+                src={item.imageSrc}
+                alt={item.title}
                 variant='elevated'
               />
               <Stack>
                 <CardBody >
-                  <Heading color='white' size='xs'>{card.title}</Heading>
-                  <Text color='white' size='xs' py='2'>{card.price}</Text>
+                  <Heading color='white' size='xs'>{item.title}</Heading>
+                  <Text color='white' size='xs' py='2'>{item.price}</Text>
                 </CardBody>
+
+                <CardFooter>
+                  {isHovered && (
+                    <Button
+                      variant="ghost"
+                      colorScheme="blue"
+                      position="absolute"
+                      bottom="10%"
+                      right="10%"
+                      _hover={{ color: 'white' }}
+                      onClick={() => dispatch(addToCart(item))}
+                    >
+                      <BsFillPlusCircleFill size={30} />
+                    </Button>
+                  )}
+                </CardFooter>
+
               </Stack>
             </Card>
           </VStack>
